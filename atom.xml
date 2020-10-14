@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-10-10T10:27:17.808Z</updated>
+  <updated>2020-10-14T15:38:28.915Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何为hexo更换主题</title>
+    <link href="http://example.com/2020/10/14/%E5%A6%82%E4%BD%95%E4%B8%BAhexo%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98/"/>
+    <id>http://example.com/2020/10/14/%E5%A6%82%E4%BD%95%E4%B8%BAhexo%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98/</id>
+    <published>2020-10-14T09:01:43.000Z</published>
+    <updated>2020-10-14T15:38:28.915Z</updated>
+    
+    <content type="html"><![CDATA[<p>#如何为hexo更换主题<br>hexo自带的主题比较普通，如果说想让自己的blog比较有特色的话，可以换自己喜欢的主题。<br>##寻找主题<br>寻找自己喜欢的主题最简便的方法就是到hexo的主题页找<br><a href="https://hexo.io/themes/">hexo官方主题</a><br>也可以自行用搜索引擎搜索<br>##下载并配置主题<br>这里以melody主题为例</p><ol><li>找到该主题仓库地址并复制，如图<br> <img src="https://note.youdao.com/yws/api/personal/file/WEBa099c139846d68af2c0dddda8a1a377d?method=download&shareKey=079fe6a172ee1db8e35703a946232beb" alt="仓库地址"></li><li>打开git命令窗口并输入如图指令<br> <img src="https://note.youdao.com/yws/api/personal/file/WEB7cfc1d7c70ac5e6ff44f7757f7ebd16f?method=download&shareKey=c8dd6a225c81043c2c858468d1938240"><br> 注意：需在仓库后加上themes/melody</li><li>更改配置文件<br> 更改根目录下配置文件_config.yml ,修改主题名即可，如图<br> <img src="https://note.youdao.com/yws/api/personal/file/WEBa2235c956bce7677cf0a0a64b13a4d88?method=download&shareKey=4e16494cbe7c1d1601f817f19f4b3761"></li><li>更新并发布主题<br> 按照顺序分别输入如下指令<br> <img src="https://note.youdao.com/yws/api/personal/file/WEB426bcfb0a6ed100a684df4a2b2dfdebf?method=download&shareKey=eb7f4cc92d2da349cfeea4eb866ee82f"><br> <img src="https://note.youdao.com/yws/api/personal/file/WEBba33f8e1da0047be10623eb4ad978d7d?method=download&shareKey=7cf0d48c7a42f58bd22df6e409224ecd"><br> <img src="https://note.youdao.com/yws/api/personal/file/WEBbb6c01be2c6d31fbfa085f81f2b288dd?method=download&shareKey=81c5700aa2b1c182b6f4d20a867140d5"></li><li>至此大功告成，打开看看效果<br> <img src="https://note.youdao.com/yws/api/personal/file/WEBf657a2180a06cc8ae751c65f2254669d?method=download&shareKey=4c21d7e0018e3c478a19bf1305997caa"></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;#如何为hexo更换主题&lt;br&gt;hexo自带的主题比较普通，如果说想让自己的blog比较有特色的话，可以换自己喜欢的主题。&lt;br&gt;##寻找主题&lt;br&gt;寻找自己喜欢的主题最简便的方法就是到hexo的主题页找&lt;br&gt;&lt;a href=&quot;https://hexo.io/themes</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
