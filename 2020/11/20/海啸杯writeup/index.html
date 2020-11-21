@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="海啸杯writeup"><meta name="keywords" content=""><meta name="author" content="Y."><meta name="copyright" content="Y."><title>海啸杯writeup | Y. blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.2.0'
+} </script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Y. blog" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#misc"><span class="toc-number">1.</span> <span class="toc-text">misc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%99%BD"><span class="toc-number">1.1.</span> <span class="toc-text">表白</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LSB"><span class="toc-number">1.2.</span> <span class="toc-text">LSB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E8%83%BD%E7%A0%B4%E8%A7%A3%E5%90%97%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">你能破解吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%81%E7%83%9F%E6%9E%AA"><span class="toc-number">1.4.</span> <span class="toc-text">老烟枪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#disk"><span class="toc-number">1.5.</span> <span class="toc-text">disk</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web"><span class="toc-number">2.</span> <span class="toc-text">web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#G2mtu%E5%AD%A6%E7%94%9F%EF%BC%9F"><span class="toc-number">2.1.</span> <span class="toc-text">G2mtu学生？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Who-are-you"><span class="toc-number">2.2.</span> <span class="toc-text">Who are you?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%8F%82%E6%95%B0rce"><span class="toc-number">2.3.</span> <span class="toc-text">无参数rce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E5%A5%87%E7%9A%84%E7%99%BB%E5%BD%95%E6%A1%86"><span class="toc-number">2.4.</span> <span class="toc-text">神奇的登录框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cms"><span class="toc-number">2.5.</span> <span class="toc-text">cms</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Crypto"><span class="toc-number">3.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%BA%E6%92%92%E5%B0%86%E5%86%9B"><span class="toc-number">3.1.</span> <span class="toc-text">恺撒将军</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E6%98%8E%E5%AE%B6%E7%9A%84%E5%B0%8F%E8%8F%9C%E5%9B%AD"><span class="toc-number">3.2.</span> <span class="toc-text">小明家的小菜园</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%98%E6%8A%A5"><span class="toc-number">3.3.</span> <span class="toc-text">战报</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pwn"><span class="toc-number">4.</span> <span class="toc-text">pwn</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Y.</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Y. blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">海啸杯writeup</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-20</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="表白"><a href="#表白" class="headerlink" title="表白"></a>表白</h2><ul>
+<li><p>图片一看长和宽比例就不太对<br><img src="https://note.youdao.com/yws/api/personal/file/WEBb5aa0929994ab05abbbc7fc426dcf855?method=download&shareKey=136092033ea6928ee0a371d2ae6a26bd"></p>
+</li>
+<li><p>将宽度像素转成十六进制，在winhex里找到，然后改成和长度一样像素的十六进制数<br><img src="https://note.youdao.com/yws/api/personal/file/WEB7c091ea9ff969f4223e754625974f4bc?method=download&shareKey=7a83e41741130e5ec813ff11815541a5"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB44ea8c397ec9eae46b91090301d9792e?method=download&shareKey=20866f5d346bbca0c1d8a75a7dd58051"></p>
+</li>
+<li><p>重新生成图片就看到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB9d3efe8dc0b6a2a306f9147df46b4e65?method=download&shareKey=cf739286553055a2035326fdff5c0a76"></p>
+</li>
+</ul>
+<h2 id="LSB"><a href="#LSB" class="headerlink" title="LSB"></a>LSB</h2><ul>
+<li><p>由于是lsb，直接如图试一下<br><img src="https://note.youdao.com/yws/api/personal/file/WEBa250a0f99f04e39a587e03c1697afa02?method=download&shareKey=13a51d901d090ff817984b92546d43e0"></p>
+</li>
+<li><p>得到一张二维码，扫描得到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEBa6f798045af81d590e39690fc88e559b?method=download&shareKey=98d8d7a35a1783e7ee14fccc5d62759e"></p>
+</li>
+</ul>
+<h2 id="你能破解吗？"><a href="#你能破解吗？" class="headerlink" title="你能破解吗？"></a>你能破解吗？</h2><ul>
+<li><p>最开始想会不会是伪加密，试了一下不是<br><img src="https://note.youdao.com/yws/api/personal/file/WEBa9a845cfe8ba19bcae5d4c117abe789d?method=download&shareKey=787ff01c72b348e38d03b87d51a53501"></p>
+</li>
+<li><p>既然不是伪加密，那就爆破,得到密码，拿到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEBf889789cf2fba18bd8391826da6ee3eb?method=download&shareKey=74c89976ae03670c6b17effd28111df2"></p>
+</li>
+</ul>
+<h2 id="老烟枪"><a href="#老烟枪" class="headerlink" title="老烟枪"></a>老烟枪</h2><ul>
+<li><p>做的时候知道用binwalk，但虚拟机没弄好，所以用了同学的另一个方法，下面是后来重新做的<br><img src="https://note.youdao.com/yws/api/personal/file/WEB62fe40bc3ad49dcc11ae3964e20c94e6?method=download&shareKey=220d75e207fca8989c1544a881bea0b4"></p>
+</li>
+<li><p>接着用winhex分离，得到一张图片，翻转后就是flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEBfb0abdc5b235bc4f44bb9eace3618f2d?method=download&shareKey=6a16b06f2dd67838fb7565408af40404"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB2018495297d9ebc2909d08c8f1e63692?method=download&shareKey=1b5ce61703793d3388b872fc08c13af8"></p>
+</li>
+</ul>
+<h2 id="disk"><a href="#disk" class="headerlink" title="disk"></a>disk</h2><ul>
+<li>extundelete一直没弄好，等弄好后补充。<br><img src="https://note.youdao.com/yws/api/personal/file/WEBece05c5ae0fab98ce73019c9e1819eca?method=download&shareKey=e242463e7f13597ab3fb0379ed10a5ed"></li>
+</ul>
+<h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="G2mtu学生？"><a href="#G2mtu学生？" class="headerlink" title="G2mtu学生？"></a>G2mtu学生？</h2><ul>
+<li>刚开始没有思路，后面想到会不会是ip限制，试一下得到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB033293b8ba5731becebcf09a7265ba93?method=download&shareKey=8001660c045b8bb9c51c2982d970308a"></li>
+</ul>
+<h2 id="Who-are-you"><a href="#Who-are-you" class="headerlink" title="Who are you?"></a>Who are you?</h2><ul>
+<li><p>刚开始完全没思路，没做过这类题，后来同学说这是xxe漏洞的题，用伪协议读flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB9147f26b8a330af61796a2964c373554?method=download&shareKey=7a8a4b8b8489be4e18e6e9f8ca4fa6db"></p>
+</li>
+<li><p>结果这个flag是错的，读index.php试一下得到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8f1d1aeea5f934b481fc33f595eaf863?method=download&shareKey=a7be3e4ff8f77083b7971d7ce05448f0"><br><img src="https://note.youdao.com/yws/api/personal/file/WEBcb6ee07e871304a4ffe1eb199895507a?method=download&shareKey=54340c1ef88a458af03fbe460a8d1d50"></p>
+</li>
+</ul>
+<h2 id="无参数rce"><a href="#无参数rce" class="headerlink" title="无参数rce"></a>无参数rce</h2><ul>
+<li><p>很多函数都被ban了，有想到用array_rand这个函数，但构造不出payload，看了师兄的writeup后知道payload如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin2hex(file_get_contents(array_rand(array_flip(scandir(current(localeconv()))))));</span><br><span class="line">Var_dump(Readfile(array_rand(array_flip(scandir(Pos(localeconv()))))));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当时一直执着于构造函数，忘了还有另种方式用sessionid来传参<br><img src="https://note.youdao.com/yws/api/personal/file/WEBc60b40dfa2971da05b17b4d8d0cd5e8f?method=download&shareKey=91eb7b12400424193a47bf4794da2548"></p>
+</li>
+</ul>
+<h2 id="神奇的登录框"><a href="#神奇的登录框" class="headerlink" title="神奇的登录框"></a>神奇的登录框</h2><ul>
+<li><p>太菜做不出来，看writeup才知道怎么做</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls &gt; 1.txt</span><br><span class="line">cat flagggg.php&gt; 1.txt</span><br><span class="line">&#96;cat flagggg.php&gt; 1.txt&#96;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问1.txt就得到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB33c6e06a310930f565ca9b6806881b7b?method=download&shareKey=2e97c1a7c6ac0d78bb566b5490c948db"></p>
+</li>
+</ul>
+<h2 id="cms"><a href="#cms" class="headerlink" title="cms"></a>cms</h2><ul>
+<li>当时做的时候以为可以通过文件上传来做，看writeup才知道是文件包含类型，但复现是不知道为什么老是提示验证码错误，等解决再补充。</li>
+</ul>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="恺撒将军"><a href="#恺撒将军" class="headerlink" title="恺撒将军"></a>恺撒将军</h2><ul>
+<li><p>刚开始用转换工具弄，但&lt;,[这些都被略过了，脚本又不会写只能这样了，一定要好好学写脚本<br><img src="https://note.youdao.com/yws/api/personal/file/WEB5bc6b7fcc1744e54b13106afb2ce5acc?method=download&shareKey=42891c5083f1642d5cc59267f421d5ad"></p>
+</li>
+<li><p>最后转下码就得到flag了<br><img src="https://note.youdao.com/yws/api/personal/file/WEBf02687c35d63b9745d0461940d619330?method=download&shareKey=ab4a47a9267e0d9f32c196ac8fe53393"></p>
+</li>
+</ul>
+<h2 id="小明家的小菜园"><a href="#小明家的小菜园" class="headerlink" title="小明家的小菜园"></a>小明家的小菜园</h2><ul>
+<li>菜园就有栅栏，考虑栅栏密码，拿到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB586b56b1381dc38f925b7969ff9aa45a?method=download&shareKey=047d7e1e8e9dfde6603cca09e895e332"></li>
+</ul>
+<h2 id="战报"><a href="#战报" class="headerlink" title="战报"></a>战报</h2><ul>
+<li>把明文和密文分别进行字频分析，将明文密文一一对应<br><img src="https://note.youdao.com/yws/api/personal/file/WEBc73a1450e89f88fb69047a5b2dfd15f9?method=download&shareKey=d4432b52a76563d0f982596bbd60a1d1"><br><img src="https://note.youdao.com/yws/api/personal/file/WEBd3aca44198ebe9cb57640ecd37d5c084?method=download&shareKey=062391dae77ff7b00a2b2deeaac8947d"></li>
+</ul>
+<p>-然后对照题目给的密文，得到的明文就是flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEBa0221011ec28298bb3e3d93ba7866344?method=download&shareKey=de081135b8b704202613057ea4a2822e"></p>
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><p><strong>不会</strong></p>
+<p>**师兄writeup</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.getflag.cn/2020/11/19/%E6%B5%B7%E5%95%B8%E6%9D%AF/">https://www.getflag.cn/2020/11/19/%E6%B5%B7%E5%95%B8%E6%9D%AF/</a><br><a target="_blank" rel="noopener" href="https://flag2020.top/2020/11/19/%E7%AC%AC%E4%B8%89%E5%B1%8A%E6%B5%B7%E5%95%B8%E6%9D%AFwrite%20up/">https://flag2020.top/2020/11/19/%E7%AC%AC%E4%B8%89%E5%B1%8A%E6%B5%B7%E5%95%B8%E6%9D%AFwrite%20up/</a></p>
+</blockquote>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Y.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/11/20/海啸杯writeup/">http://example.com/2020/11/20/海啸杯writeup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com">Y. blog</a>！</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/11/14/%E6%97%A0%E5%8F%82%E6%95%B0rec%E5%AD%A6%E4%B9%A0/"><span>无参数rec学习</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2020 By Y.</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
