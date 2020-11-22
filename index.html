@@ -51,7 +51,7 @@
 <li><p>很多函数都被ban了，有想到用array_rand这个函数，但构造不出payload，看了师兄的writeup后知道payload如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin2hex(file_get_contents(array_rand(array_flip(scandir(current(localeconv()))))));</span><br><span class="line">Var_dump(Readfile(array_rand(array_flip(scandir(Pos(localeconv()))))));</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>当时一直执着于构造函数，忘了还有另种方式用sessionid来传参<br><img src="https://note.youdao.com/yws/api/personal/file/WEBc60b40dfa2971da05b17b4d8d0cd5e8f?method=download&shareKey=91eb7b12400424193a47bf4794da2548"></p>
+<li><p>当时一直执着于构造函数，忘了还有另种方式用SESSIONID来传参<br><img src="https://note.youdao.com/yws/api/personal/file/WEBc60b40dfa2971da05b17b4d8d0cd5e8f?method=download&shareKey=91eb7b12400424193a47bf4794da2548"></p>
 </li>
 </ul>
 <h2 id="神奇的登录框"><a href="#神奇的登录框" class="headerlink" title="神奇的登录框"></a>神奇的登录框</h2><ul>
@@ -78,7 +78,7 @@
 </ul>
 <p>-然后对照题目给的密文，得到的明文就是flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEBa0221011ec28298bb3e3d93ba7866344?method=download&shareKey=de081135b8b704202613057ea4a2822e"></p>
 <h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><p><strong>不会</strong></p>
-<p>**师兄writeup</p>
+<p><strong>师兄writeup</strong></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.getflag.cn/2020/11/19/%E6%B5%B7%E5%95%B8%E6%9D%AF/">https://www.getflag.cn/2020/11/19/%E6%B5%B7%E5%95%B8%E6%9D%AF/</a><br><a target="_blank" rel="noopener" href="https://flag2020.top/2020/11/19/%E7%AC%AC%E4%B8%89%E5%B1%8A%E6%B5%B7%E5%95%B8%E6%9D%AFwrite%20up/">https://flag2020.top/2020/11/19/%E7%AC%AC%E4%B8%89%E5%B1%8A%E6%B5%B7%E5%95%B8%E6%9D%AFwrite%20up/</a></p>
 </blockquote>
